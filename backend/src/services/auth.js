@@ -1,11 +1,13 @@
 const { Membro } = require("../models");
 const ConflictError = require("../errors/conflictError");
+const { generateHashedPassword } = require("../utils/auth");
 
 const createMembro = async (data) => {
+  const hashedPassword = await generateHashedPassword(data.senha);
   const membro = await Membro.create({
     nome: data.nome,
     email: data.email,
-    senha: data.senha,
+    senha: hashedPassword,
   });
 
   return membro;
