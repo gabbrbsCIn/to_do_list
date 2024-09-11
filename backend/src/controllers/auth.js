@@ -5,9 +5,9 @@ const { sendSuccessResponse, sendErrorResponse } = require("../utils/utils");
 const register = async (req, res) => {
   try {
     const data = validateDataRequest(req);
-    const membro = await checkMembroExistsByEmail(data.email);
-    await createMembro(data);
-    sendSuccessResponse(res, "Membro Registrado!", membro);
+    await checkMembroExistsByEmail(data.email);
+    const membro = await createMembro(data);
+    sendSuccessResponse(res, "Membro Registrado com sucesso!", membro.email);
   } catch (error) {
     sendErrorResponse(res, error);
   }
