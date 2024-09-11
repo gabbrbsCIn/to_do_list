@@ -1,21 +1,15 @@
-const AppError = require("../errors/AppError");
 const { validateDataRequest } = require("../utils/auth");
-const { createMembro } = require("../services/auth");
+const { createMembro, checkMembroExistsByEmail } = require("../services/auth");
+const { sendSuccessResponse, sendErrorResponse } = require("../utils/utils");
 
 const register = async (req, res) => {
   try {
     const data = validateDataRequest(req);
-    const membro = await createMembro(data);
-    return res
-      .json({ message: "Membro registrado!", data: membro.email })
-      .status(200);
+    const membro = await checkMembroExistsByEmail(data.email);
+    await createMembro(data);
+    sendSuccessResponse(res, "Membro Registrado!", membro);
   } catch (error) {
-    if (error instanceof AppError) {
-      return res.status(error.httpCode).json({ message: error.message });
-    } else {
-      console.log(error);
-      return res.send(error).status(500);
-    }
+    sendErrorResponse(res, error);
   }
 };
 
