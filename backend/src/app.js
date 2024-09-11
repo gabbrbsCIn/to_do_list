@@ -1,14 +1,17 @@
-const express = require("express");
-const db = require("./src/models");
-const app = express();
 require("dotenv").config();
-
+const express = require("express");
+const db = require("./models");
+const app = express();
+const authRoutes = require("./routes/auth")
 app.use(express.json());
 
 PORT = process.env.PORT;
+
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
 });
+
+app.use("/", authRoutes);
 
 (async () => {
   try {
