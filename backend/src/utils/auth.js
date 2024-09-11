@@ -1,4 +1,5 @@
 const ValidationError = require("../errors/validationError")
+const bcrypt = require("bcrypt");
 
 const validateDataRequest = (req) => {
   const membroData = {};
@@ -12,8 +13,12 @@ const validateDataRequest = (req) => {
   return membroData;
 };
 
-
+const generateHashedPassword = async (senha) => {
+  hashedPassword = await bcrypt.hash(senha, 10);
+  return hashedPassword;
+}
 
 module.exports = {
-  validateDataRequest
+  validateDataRequest,
+  generateHashedPassword
 }
