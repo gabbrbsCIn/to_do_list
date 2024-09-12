@@ -41,8 +41,6 @@ const generateJWTToken = async (membro) => {
   const token = jwt.sign(
     {
       id: membro.id,
-      nome: membro.nome,
-      email: membro.email,
     },
     process.env.JWT_SECRET_KEY,
     {
@@ -79,6 +77,8 @@ const verifyJWTToken = (token) => {
   return decodedToken;
 };
 
+
+
 module.exports = {
   validateDataRequest,
   generateHashedPassword,
@@ -86,5 +86,5 @@ module.exports = {
   generateJWTToken,
   extractTokenFromBearer,
   extractTokenFromHeader,
-  verifyJWTToken
+  verifyJWTToken,
 };
