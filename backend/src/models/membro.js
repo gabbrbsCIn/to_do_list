@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         len: {
-          args: [5],
+          args: [5, 50],
           msg: "Número de caracteres fora do limite"
         }
       }
@@ -40,7 +40,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
       validate: {
         len: {
-          args: [3],
+          args: [3,50],
           msg: "Número de caracteres fora do limite"
         }
       }
