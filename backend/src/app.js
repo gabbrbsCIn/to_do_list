@@ -2,7 +2,8 @@ require("dotenv").config();
 const express = require("express");
 const db = require("./models");
 const app = express();
-const authRoutes = require("./routes/auth")
+const authRoutes = require("./routes/auth");
+const membroRoutes = require("./routes/membros");
 app.use(express.json());
 
 PORT = process.env.PORT;
@@ -12,6 +13,7 @@ app.listen(PORT, () => {
 });
 
 app.use("/", authRoutes);
+app.use("/membros", membroRoutes);
 
 (async () => {
   try {
