@@ -1,6 +1,8 @@
-const { SequelizeScopeError } = require("sequelize");
-const { createTarefa } = require("../services/tarefas");
-const { validateTarefaDataRequest } = require("../utils/tarefas");
+const { createTarefa, updateTarefa } = require("../services/tarefas");
+const {
+  validateTarefaDataRequest,
+  validateTarefaIdFromRequest,
+} = require("../utils/tarefas");
 const { sendErrorResponse, sendSuccessResponse } = require("../utils/utils");
 
 const create = async (req, res) => {
@@ -14,6 +16,18 @@ const create = async (req, res) => {
   }
 };
 
+const update = async (req, res) => {
+  try {
+    const tarefaId = validateTarefaIdFromRequest(req);
+    const tarefa = validateTarefaDataRequest(req);
+    await updateTarefa(tarefa, tarefaId);
+    sendSuccessResponse(res, "Tarefa atualizada", tarefa);
+  } catch (error) {
+    sendErrorResponse(res, error);
+  }
+};
+
 module.exports = {
   create,
+  update,
 };
