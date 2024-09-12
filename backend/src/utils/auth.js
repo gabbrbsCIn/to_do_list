@@ -1,5 +1,6 @@
 const ValidationError = require("../errors/validationError");
 const AuthenticationError = require("../errors/authenticationError");
+const AuthorizationError = require("../errors/authorizationError");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
@@ -51,9 +52,39 @@ const generateJWTToken = async (membro) => {
   return token;
 };
 
+const extractTokenFromBearer = (token) => {
+  if (token.startsWith("Bearer ")) {
+    token = token.slice(7, token.length);
+  }
+  return token;
+};
+
+const extractTokenFromHeader = (req) => {
+  let token = req["authorization"];
+  if (!token) {
+    throw new ValidationError("Nenhum token foi inserido");
+  }
+  token = extractTokenFromBearer(token);
+  return token;
+};
+
+const verifyJWTToken = (token) => {
+  const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
+  const decodedToken = jwt.verify(token, JWT_SECRET_KEY, (error, decoded) => {
+    if (error) {
+      throw new AuthorizationError(error.message);
+    }
+    return decoded;
+  });
+  return decodedToken;
+};
+
 module.exports = {
   validateDataRequest,
   generateHashedPassword,
   verifyPassword,
   generateJWTToken,
+  extractTokenFromBearer,
+  extractTokenFromHeader,
+  verifyJWTToken
 };
