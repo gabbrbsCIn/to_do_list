@@ -4,6 +4,7 @@ const db = require("./models");
 const app = express();
 const authRoutes = require("./routes/auth");
 const membroRoutes = require("./routes/membros");
+const tarefaRoutes = require("./routes/tarefas");
 app.use(express.json());
 
 PORT = process.env.PORT;
@@ -14,6 +15,7 @@ app.listen(PORT, () => {
 
 app.use("/", authRoutes);
 app.use("/membros", membroRoutes);
+app.use("/tarefas", tarefaRoutes);
 
 (async () => {
   try {
