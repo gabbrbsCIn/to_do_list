@@ -8,11 +8,20 @@ const validateTarefaDataRequest = (req) => {
     req.body.prioridade = "baixa";
   }
   if (!req.body.descricao) {
-    req.body.prioridade = "";
+    req.body.descricao = "";
   }
   return req.body;
 };
 
+const validateTarefaIdFromRequest = (req) => {
+  const tarefaId = req.body.id;
+  if (!tarefaId) {
+    throw new ValidationError("ID da tarefa não preenchido ou inválido");
+  }
+  return tarefaId;
+};
+
 module.exports = {
   validateTarefaDataRequest,
+  validateTarefaIdFromRequest,
 };
