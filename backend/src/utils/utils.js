@@ -8,7 +8,7 @@ const sendErrorResponse = (res, error) => {
     return res.status(error.httpCode).json({ message: error.message });
   } else {
     console.log(error);
-    return res.json({ error: error }).status(500);
+    return res.status(500).json({ error: error.message });
   }
 };
 
