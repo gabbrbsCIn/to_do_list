@@ -1,7 +1,7 @@
 const { sendSuccessResponse, sendErrorResponse } = require("../utils/utils");
-const { getAllMembros } = require("../services/membros");
+const { getAllMembros, deleteMembroById } = require("../services/membros");
 
-const getMembros = async (req, res) => {
+const getAll = async (req, res) => {
   try {
     const membros = await getAllMembros();
     sendSuccessResponse(res, "Membros coletados", membros);
@@ -10,6 +10,13 @@ const getMembros = async (req, res) => {
   }
 };
 
+const deleteMembro = async (req, res) => {
+  const membroId = req.membro.id;
+  const membro = await deleteMembroById(membroId);
+  sendSuccessResponse(res, "Membro deletado", membro);
+};
+
 module.exports = {
-  getMembros,
+  getAll,
+  deleteMembro
 };
