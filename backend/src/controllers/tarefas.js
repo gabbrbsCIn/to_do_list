@@ -3,7 +3,8 @@ const {
   updateTarefa,
   findTarefasByMembroId,
   findAllTarefas,
-  deleteTarefaById
+  deleteTarefaById,
+  finishTarefa,
 } = require("../services/tarefas");
 const {
   validateTarefaDataRequest,
@@ -46,9 +47,23 @@ const getAll = async (req, res) => {
 };
 
 const deleteTarefa = async (req, res) => {
-  const tarefaId = validateTarefaIdFromRequest(req);
-  await deleteTarefaById(tarefaId);
-  sendSuccessResponse(res, "Tarefa deletada com sucesso", tarefaId);
+  try {
+    const tarefaId = validateTarefaIdFromRequest(req);
+    await deleteTarefaById(tarefaId);
+    sendSuccessResponse(res, "Tarefa deletada com sucesso", tarefaId);
+  } catch (error) {
+    sendErrorResponse(res, error);
+  }
+};
+
+const finish = async (req, res) => {
+  try {
+    const tarefaId = validateTarefaIdFromRequest(req);
+    await finishTarefa(tarefaId);
+    sendSuccessResponse(res, "Tarefa concluída", tarefaId);
+  } catch (error) {
+    sendErrorResponse(res, error);
+  }
 };
 
 module.exports = {
@@ -57,4 +72,5 @@ module.exports = {
   getMembroTarefas,
   getAll,
   deleteTarefa,
+  finish,
 };
