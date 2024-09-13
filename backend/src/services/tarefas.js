@@ -36,13 +36,18 @@ const findTarefasByMembroId = async (membroId) => {
     where: {
       membroId: membroId,
     },
-
   });
 
+  return tarefas;
+};
+
+const findAllTarefas = async () => {
+  const tarefas = await Tarefa.findAll();
   return tarefas;
 };
 module.exports = {
   createTarefa,
   updateTarefa,
   findTarefasByMembroId,
+  findAllTarefas,
 };
