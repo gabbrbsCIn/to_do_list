@@ -55,8 +55,20 @@ const checkMembroTarefaOwner = async (tarefaId, membroId) => {
     },
   });
   if (!tarefa) {
-    throw new AuthorizationError("Você não tem autorização para atualizar essa tarefa")
+    throw new AuthorizationError(
+      "Você não tem autorização para fazer alterações ou deletar essa tarefa"
+    );
   }
+  return tarefa;
+};
+
+const deleteTarefaById = async (tarefaId) => {
+  const tarefa = await Tarefa.destroy({
+    where: {
+      id: tarefaId,
+    },
+  });
+  console.log(tarefa);
   return tarefa;
 };
 
@@ -66,4 +78,5 @@ module.exports = {
   findTarefasByMembroId,
   findAllTarefas,
   checkMembroTarefaOwner,
+  deleteTarefaById
 };

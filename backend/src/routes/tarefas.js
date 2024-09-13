@@ -8,5 +8,6 @@ router.post("/create", authenticateToken, tarefas.create);
 router.post("/update", authenticateToken, adminTarefa, tarefas.update);
 router.get("/membro", authenticateToken, tarefas.getMembroTarefas);
 router.get("/", authenticateToken, tarefas.getAll);
+router.delete("/delete", authenticateToken, adminTarefa, tarefas.deleteTarefa);
 
 module.exports = router;
