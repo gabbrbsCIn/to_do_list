@@ -1,4 +1,9 @@
-const { createTarefa, updateTarefa, findTarefasByMembroId } = require("../services/tarefas");
+const {
+  createTarefa,
+  updateTarefa,
+  findTarefasByMembroId,
+  findAllTarefas,
+} = require("../services/tarefas");
 const {
   validateTarefaDataRequest,
   validateTarefaIdFromRequest,
@@ -34,8 +39,14 @@ const getMembroTarefas = async (req, res) => {
   sendSuccessResponse(res, "Tarefas coletadas", tarefas);
 };
 
+const getAll = async (req, res) => {
+  const tarefas = await findAllTarefas();
+  sendSuccessResponse(res, "Tarefas coletadas", tarefas);
+};
+
 module.exports = {
   create,
   update,
   getMembroTarefas,
+  getAll,
 };
