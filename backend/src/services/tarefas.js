@@ -1,5 +1,6 @@
 const { Tarefa } = require("../models");
 const NotFoundError = require("../errors/notFoundError");
+const AuthorizationError = require("../errors/authorizationError");
 
 const createTarefa = async (tarefa, membroId) => {
   const createdTarefa = await Tarefa.create({
@@ -45,9 +46,24 @@ const findAllTarefas = async () => {
   const tarefas = await Tarefa.findAll();
   return tarefas;
 };
+
+const checkMembroTarefaOwner = async (tarefaId, membroId) => {
+  const tarefa = await Tarefa.findOne({
+    where: {
+      id: tarefaId,
+      membroId: membroId,
+    },
+  });
+  if (!tarefa) {
+    throw new AuthorizationError("Você não tem autorização para atualizar essa tarefa")
+  }
+  return tarefa;
+};
+
 module.exports = {
   createTarefa,
   updateTarefa,
   findTarefasByMembroId,
   findAllTarefas,
+  checkMembroTarefaOwner,
 };
