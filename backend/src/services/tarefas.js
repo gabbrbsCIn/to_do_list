@@ -1,6 +1,7 @@
 const { Tarefa } = require("../models");
 const NotFoundError = require("../errors/notFoundError");
 const AuthorizationError = require("../errors/authorizationError");
+const { where } = require("sequelize");
 
 const createTarefa = async (tarefa, membroId) => {
   const createdTarefa = await Tarefa.create({
@@ -23,11 +24,12 @@ const updateTarefa = async (tarefa, tarefaId) => {
     {
       where: {
         id: tarefaId,
+        finalizada: false
       },
     }
   );
   if (tarefasFound === 0) {
-    throw new NotFoundError("ID da tarefa inválido");
+    throw new NotFoundError("ID da tarefa inválido e/ou não pode ser editado");
   }
   return tarefasFound;
 };
@@ -68,7 +70,22 @@ const deleteTarefaById = async (tarefaId) => {
       id: tarefaId,
     },
   });
-  console.log(tarefa);
+  return tarefa;
+};
+
+const finishTarefa = async (tarefaId) => {
+  const tarefa = await Tarefa.update(
+    {
+      finalizada: true,
+      terminadaEm: new Date(),
+    },
+    {
+      where: {
+        id: tarefaId,
+      },
+    }
+  );
+
   return tarefa;
 };
 
@@ -78,5 +95,6 @@ module.exports = {
   findTarefasByMembroId,
   findAllTarefas,
   checkMembroTarefaOwner,
-  deleteTarefaById
+  deleteTarefaById,
+  finishTarefa,
 };
