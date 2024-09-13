@@ -13,7 +13,7 @@ const createTarefa = async (tarefa, membroId) => {
 };
 
 const updateTarefa = async (tarefa, tarefaId) => {
-  const [foundTarefas] = await Tarefa.update(
+  const [tarefasFound] = await Tarefa.update(
     {
       nome: tarefa.nome,
       descricao: tarefa.descricao,
@@ -25,13 +25,29 @@ const updateTarefa = async (tarefa, tarefaId) => {
       },
     }
   );
-  if (foundTarefas === 0) {
+  if (tarefasFound === 0) {
     throw new NotFoundError("ID da tarefa inválido");
   }
-  return foundTarefas;
+  return tarefasFound;
 };
 
+const findTarefasByMembroId = async (membroId) => {
+  const tarefas = await Tarefa.findAll({
+    where: {
+      membroId: membroId,
+    },
+  });
+
+  return tarefas;
+};
+
+const findAllTarefas = async () => {
+  const tarefas = await Tarefa.findAll();
+  return tarefas;
+};
 module.exports = {
   createTarefa,
   updateTarefa,
+  findTarefasByMembroId,
+  findAllTarefas,
 };

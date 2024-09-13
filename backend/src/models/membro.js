@@ -1,7 +1,5 @@
-'use strict';
-const {
-  Model
-} = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Membro extends Model {
     /**
@@ -13,42 +11,45 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  Membro.init({
-    id: {
-      type: DataTypes.UUID,
-      defaultValue: DataTypes.UUIDV4,
-      allowNull: false,
-      primaryKey: true
+  Membro.init(
+    {
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        allowNull: false,
+        primaryKey: true,
+      },
+      email: {
+        type: DataTypes.STRING,
+        unique: true,
+        allowNull: false,
+      },
+      nome: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          len: {
+            args: [5, 50],
+            msg: "Número de caracteres fora do limite",
+          },
+        },
+      },
+      senha: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        validate: {
+          len: {
+            args: [3, 255],
+            msg: "Número de caracteres fora do limite",
+          },
+        },
+      },
     },
-    email: {
-      type: DataTypes.STRING,
-      unique:true,
-      allowNull: false
-    },
-    nome: {
-      type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        len: {
-          args: [5, 50],
-          msg: "Número de caracteres fora do limite"
-        }
-      }
-    },
-    senha: {
-      type:  DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        len: {
-          args: [3,50],
-          msg: "Número de caracteres fora do limite"
-        }
-      }
+    {
+      sequelize,
+      modelName: "Membro",
+      tableName: "Membros",
     }
-  }, {
-    sequelize,
-    modelName: "Membro",
-    tableName: "Membros"
-  });
+  );
   return Membro;
 };
