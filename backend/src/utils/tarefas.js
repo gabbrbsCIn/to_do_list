@@ -10,6 +10,8 @@ const validateTarefaDataRequest = (req) => {
   if (!req.body.descricao) {
     req.body.descricao = "";
   }
+  req.body.prioridade = req.body.prioridade.toLowerCase();
+
   return req.body;
 };
 
