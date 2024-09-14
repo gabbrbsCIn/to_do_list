@@ -3,8 +3,9 @@ import { Route, BrowserRouter, Routes } from "react-router-dom";
 import Home from "../pages/home/home";
 import Login from "../pages/login/login";
 import Register from "../pages/register/register";
-import ListMembros from "../pages/listMembros/listMembros";
 import ProtectedRoute from "../components/auth/protectedRoute";
+import CreateTarefa from "../pages/createTarefa/createTarefa";
+import ListTarefa from "../pages/listTarefa/listTarefa";
 
 const AppRoutes = () => {
   return (
@@ -21,10 +22,18 @@ const AppRoutes = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route
-          path="/membros"
+          path="/createTarefa"
           element={
             <ProtectedRoute>
-              <ListMembros />
+              <CreateTarefa />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/tarefas"
+          element={
+            <ProtectedRoute>
+              <ListTarefa />
             </ProtectedRoute>
           }
         />
