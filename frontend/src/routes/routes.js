@@ -5,6 +5,7 @@ import Login from "../pages/login/login";
 import Register from "../pages/register/register";
 import ProtectedRoute from "../components/auth/protectedRoute";
 import CreateTarefa from "../pages/createTarefa/createTarefa";
+import ListTarefa from "../pages/listTarefa/listTarefa";
 
 const AppRoutes = () => {
   return (
@@ -25,6 +26,14 @@ const AppRoutes = () => {
           element={
             <ProtectedRoute>
               <CreateTarefa />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/tarefas"
+          element={
+            <ProtectedRoute>
+              <ListTarefa />
             </ProtectedRoute>
           }
         />
