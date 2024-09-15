@@ -16,7 +16,8 @@ const validateTarefaDataRequest = (req) => {
 };
 
 const validateTarefaIdFromRequest = (req) => {
-  const tarefaId = req.body.id;
+  const tarefaId = req.body.id || req.params.id;
+  console.log(tarefaId);
   if (!tarefaId) {
     throw new ValidationError("ID da tarefa não preenchido ou inválido");
   }
