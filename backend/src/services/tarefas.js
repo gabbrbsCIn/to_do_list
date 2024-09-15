@@ -89,6 +89,14 @@ const finishTarefa = async (tarefaId) => {
   return tarefa;
 };
 
+const findTarefaById = async (tarefaId) => {
+  const tarefa = await Tarefa.findByPk(tarefaId);
+  if (!tarefa) {
+    throw new NotFoundError("Tarefa não encontrada");
+  }
+  return tarefa;
+}
+
 module.exports = {
   createTarefa,
   updateTarefa,
@@ -97,4 +105,5 @@ module.exports = {
   checkMembroTarefaOwner,
   deleteTarefaById,
   finishTarefa,
+  findTarefaById
 };

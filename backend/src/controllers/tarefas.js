@@ -5,6 +5,7 @@ const {
   findAllTarefas,
   deleteTarefaById,
   finishTarefa,
+  findTarefaById
 } = require("../services/tarefas");
 const {
   validateTarefaDataRequest,
@@ -66,6 +67,16 @@ const finish = async (req, res) => {
   }
 };
 
+const getTarefaById = async (req, res) => {
+  try {
+    const tarefaId = validateTarefaIdFromRequest(req);
+    const tarefa = await findTarefaById(tarefaId);
+    sendSuccessResponse(res, "Tarefa coletada", tarefa);
+  } catch (error) {
+    sendErrorResponse(res, error);
+  }
+};
+
 module.exports = {
   create,
   update,
@@ -73,4 +84,5 @@ module.exports = {
   getAll,
   deleteTarefa,
   finish,
+  getTarefaById,
 };
