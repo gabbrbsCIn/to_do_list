@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import api from "../../services/api";
+import { createTarefa } from "../../services/tarefas";
 
 const CreateTarefa = () => {
   const [nome, setNome] = useState("");
@@ -12,7 +12,7 @@ const CreateTarefa = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await api.post("http://localhost:8080/tarefas/create", { nome, prioridade, descricao });
+      await createTarefa({ nome, prioridade, descricao });
       toast.success("Tarefa cadastrada com sucesso!");
       navigate("/home");
     } catch (error) {

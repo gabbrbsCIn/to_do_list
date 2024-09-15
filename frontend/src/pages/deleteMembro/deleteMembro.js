@@ -1,16 +1,20 @@
 import { toast } from "react-toastify";
-import api from "../../services/api";
+import { logout } from "../../services/auth";
+import { deleteMembro } from "../../services/membros";
+import { sendToastErrorResponse } from "../../utils/error/sendToastErrorResponse";
+import { useNavigate } from "react-router-dom";
 
 const DeleteMembro = () => {
+    const navigate = useNavigate();
 
     const handleDeleteMembro = async () => {
         try {
-            await api.delete(`http://localhost:8080/membros/delete`);
-            localStorage.removeItem("authToken");
+            await deleteMembro();
+            logout();
             toast.success("Membro deletado com sucesso!");
-        }catch (error) {
-            console.error(error);
-            toast.error(error.message);
+            navigate("/login");
+        } catch (error) {
+            sendToastErrorResponse(error);
         }
 
     }

@@ -19,3 +19,7 @@ export const login = async (data) => {
     sendErrorResponse(error);
   }
 };
+
+export const logout = async () => {
+  localStorage.removeItem("authToken");
+}
