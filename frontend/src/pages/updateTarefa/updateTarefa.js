@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import api from "../../services/api";
 import { toast } from "react-toastify";
+import { getTarefaById, updateTarefa } from "../../services/tarefas";
+import { sendToastErrorResponse } from "../../utils/error/sendToastErrorResponse";
 
 
 
@@ -15,26 +16,24 @@ const UpdateTarefa = () => {
     const [descricao, setDescricao] = useState("");
 
     useEffect(() => {
-        const getTarefaById = async () => {
-            const response = await api.get(`http://localhost:8080/tarefas/${id}`);
-            const tarefa = response.data.data;
+        const getTarefa = async () => {
+            const response = await getTarefaById(id);
+            const tarefa = response.data;
             setNome(tarefa.nome);
             setPrioridade(tarefa.prioridade);
             setDescricao(tarefa.descricao);
-        };
-        getTarefaById();
+        }
+        getTarefa();
     }, [id]);
 
     const handleSubmit = async (e) => {
         try {
-
             e.preventDefault();
-            await api.put(`http://localhost:8080/tarefas/update`, { id: id, nome: nome, prioridade: prioridade, descricao: descricao });
+            await updateTarefa({ id: id, nome: nome, prioridade: prioridade, descricao: descricao });
             toast.success("Tarefa atualizada com sucesso!");
             navigate("/tarefas");
         } catch (error) {
-            console.error(error);
-            toast.error(error.message);
+            sendToastErrorResponse(error);
         }
     };
 
