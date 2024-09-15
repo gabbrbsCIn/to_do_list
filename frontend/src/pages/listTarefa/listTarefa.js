@@ -54,7 +54,7 @@ const ListTarefa = () => {
 
       <div className="w-full max-w-4xl bg-white p-4 rounded-lg shadow-md">
         <button className="bg-teal-500 text-white py-2 px-4 rounded-lg mb-4">
-          <Link to="/tarefas/new">Cadastrar Nova Tarefa</Link>
+          <Link to="/createTarefa">Cadastrar Nova Tarefa</Link>
         </button>
 
         <ul className="space-y-4">
@@ -88,7 +88,7 @@ const ListTarefa = () => {
                 </button>
 
                 <Link
-                  to={`/tarefas/edit/${tarefa.id}`}
+                  to={`/updateTarefa/${tarefa.id}`}
                   className="bg-blue-500 text-white px-4 py-2 rounded-lg"
                 >
                   Editar
