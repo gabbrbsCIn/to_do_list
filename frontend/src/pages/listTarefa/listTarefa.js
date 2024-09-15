@@ -5,43 +5,51 @@ import { toast } from "react-toastify";
 import { MdDeleteForever } from "react-icons/md";
 import { MdEdit, MdAddCircle } from "react-icons/md";
 import getMembroIdFromToken from "../../utils/membros/getMembroIdFromToken";
+import { deleteTarefa, getTarefas, updateTarefaFinalizada } from "../../services/tarefas";
+import { sendToastErrorResponse } from "../../utils/error/sendToastErrorResponse";
 
 const ListTarefa = () => {
   const [tarefas, setTarefas] = useState([]);
   const [selectedTarefa, setSelectedTarefa] = useState(null);
-  const [userId, setUserId] = useState(null);
+  const [membroId, setMembroId] = useState(null);
 
   useEffect(() => {
     const fetchTarefas = async () => {
       try {
-        const response = await api.get("http://localhost:8080/tarefas");
-        setTarefas(response.data.data);
+        const response = await getTarefas();
+        setTarefas(response.data);
       } catch (error) {
-        toast.error(error.message);
+        sendToastErrorResponse(error);
       }
     };
-    const loggedInUserId = getMembroIdFromToken();
-    setUserId(loggedInUserId);
+    const loggedInMembroId = getMembroIdFromToken();
+    setMembroId(loggedInMembroId);
 
     fetchTarefas();
   }, []);
 
-
   const finishTarefa = async (tarefa) => {
     try {
-      await api.patch("http://localhost:8080/tarefas/finish", {
-        id: tarefa.id,
+      await updateTarefaFinalizada(tarefa.id);
+
+      const updatedTarefas = tarefas.map((t) => {
+        if (t.id === tarefa.id) {
+          return { ...t, finalizada: true };
+        }
+        return t;
       });
+
+      setTarefas(updatedTarefas);
 
       toast.success("Status da tarefa atualizado.");
     } catch (error) {
-      toast.error(error.message);
+      sendToastErrorResponse(error);
     }
   };
 
   const handleDelete = async (tarefaId) => {
     try {
-      await api.delete(`http://localhost:8080/tarefas/delete/${tarefaId}`);
+      await deleteTarefa(tarefaId);
       setTarefas(tarefas.filter((tarefa) => tarefa.id !== tarefaId));
       toast.success("Tarefa deletada com sucesso.");
     } catch (error) {
@@ -89,7 +97,7 @@ const ListTarefa = () => {
                 <div className="mt-2 p-4 bg-teal-100 rounded-sm">
                   <p className="text-gray-700 mb-2">{selectedTarefa.descricao}</p>
 
-                  {userId === tarefa.membroId ? (
+                  {membroId === tarefa.membroId ? (
                     <div className="flex space-x-2">
                       {tarefa.finalizada ? (
                         <h2 className="text-sm text-green-600">Tarefa concluída</h2>
