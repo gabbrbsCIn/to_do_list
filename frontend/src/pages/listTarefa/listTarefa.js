@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import api from "../../services/api";
 import { toast } from "react-toastify";
 import { MdDeleteForever } from "react-icons/md";
-import { MdEdit } from "react-icons/md";
+import { MdEdit, MdAddCircle} from "react-icons/md";
 import getUserIdFromToken from "../../utils/membros/getMembroFromToken";
 
 const ListTarefa = () => {
@@ -27,16 +27,12 @@ const ListTarefa = () => {
   }, []);
 
 
-  const toggleFinalizada = async (tarefa) => {
+  const finishTarefa = async (tarefa) => {
     try {
       await api.patch("http://localhost:8080/tarefas/finish", {
         id: tarefa.id,
       });
-      setTarefas(
-        tarefas.map((t) =>
-          t.id === tarefa.id ? { ...t, finalizada: !t.finalizada } : t
-        )
-      );
+
       toast.success("Status da tarefa atualizado.");
     } catch (error) {
       toast.error(error.message);
@@ -66,16 +62,16 @@ const ListTarefa = () => {
         Listagem de Tarefas
       </h1>
 
-      <div className="w-full max-w-4xl bg-white p-4 rounded-lg shadow-md">
-        <button className="bg-teal-500 text-white py-2 px-4 rounded-lg mb-4">
-          <Link to="/createTarefa">Cadastrar Nova Tarefa</Link>
+      <div className="w-full max-w-4xl bg-white p-4 rounded-sm shadow-md">
+        <button className="bg-teal-500 text-white py-2 px-4 rounded-sm mb-4">
+          <Link to="/createTarefa"><MdAddCircle size={24}/></Link>
         </button>
 
         <ul className="space-y-4">
           {tarefas.map((tarefa) => (
             <li
               key={tarefa.id}
-              className="flex items-center justify-between bg-gray-100 p-4 rounded-lg shadow-md"
+              className="flex items-center justify-between bg-gray-100 p-4 rounded-sm shadow-md"
             >
               <div onClick={() => handleTarefaClick(tarefa)} className="cursor-pointer">
                 <p className="text-lg font-bold">{tarefa.nome}</p>
@@ -86,36 +82,37 @@ const ListTarefa = () => {
                   className={`text-sm ${tarefa.finalizada ? "text-green-600" : "text-red-600"
                     }`}
                 >
-                  {tarefa.finalizada ? "Finalizada" : "Pendente"}
+                  {tarefa.finalizada ? "Finalizada" : "Não finalizada"}
                 </p>
               </div>
               {selectedTarefa && selectedTarefa.id === tarefa.id && (
-                <div className="mt-2 p-4 bg-teal-100 rounded-lg">
+                <div className="mt-2 p-4 bg-teal-100 rounded-sm">
                   <p className="text-gray-700 mb-2">{selectedTarefa.descricao}</p>
 
                   {userId === tarefa.membroId ? (
                     <div className="flex space-x-2">
-                      <button
-                        className="bg-teal-500 text-white px-4 py-2 rounded-lg"
-                        onClick={() => toggleFinalizada(tarefa)}
-                      >
-                        {tarefa.finalizada
-                          ? "Marcar como Pendente"
-                          : "Marcar como Finalizada"}
-                      </button>
+                      {tarefa.finalizada ? (
+                        <h2 className="text-sm text-green-600">Tarefa concluída</h2>
+                      ) : (
+                        <button
+                          className="bg-teal-500 text-white px-4 py-2 rounded-sm"
+                          onClick={() => finishTarefa(tarefa)}
+                        >
+                          Marcar como Finalizada
+                        </button>
+                      )}
                       {!tarefa.finalizada && (
                         <Link
                           to={`/updateTarefa/${tarefa.id}`}
-                          className="bg-blue-800 text-white px-4 py-2 rounded-lg"
+                          className="bg-blue-800 text-white px-4 py-2 rounded-sm"
                         >
                           <MdEdit size={24} />
                         </Link>
                       )}
 
-
                       <button
                         onClick={() => handleDelete(tarefa.id)}
-                        className="bg-red-800 text-white px-4 py-2 rounded-lg"
+                        className="bg-red-800 text-white px-4 py-2 rounded-sm"
                       >
                         <MdDeleteForever size={24} />
                       </button>
@@ -133,7 +130,7 @@ const ListTarefa = () => {
         </ul>
 
         {selectedTarefa && (
-          <div className="mt-4 p-4 bg-teal-100 rounded-lg">
+          <div className="mt-4 p-4 bg-teal-100 rounded-sm">
             <h2 className="text-lg font-bold text-teal-700">
               {selectedTarefa.nome}
             </h2>
