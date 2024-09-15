@@ -2,15 +2,17 @@ import { toast } from "react-toastify";
 import { logout } from "../../services/auth";
 import { deleteMembro } from "../../services/membros";
 import { sendToastErrorResponse } from "../../utils/error/sendToastErrorResponse";
-
+import { useNavigate } from "react-router-dom";
 
 const DeleteMembro = () => {
+    const navigate = useNavigate();
 
     const handleDeleteMembro = async () => {
         try {
             await deleteMembro();
             logout();
             toast.success("Membro deletado com sucesso!");
+            navigate("/login");
         } catch (error) {
             sendToastErrorResponse(error);
         }
