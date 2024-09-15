@@ -7,6 +7,7 @@ import ProtectedRoute from "../components/auth/protectedRoute";
 import CreateTarefa from "../pages/createTarefa/createTarefa";
 import UpdateTarefa from "../pages/updateTarefa/updateTarefa";
 import ListTarefa from "../pages/listTarefa/listTarefa";
+import Sidebar from "../components/sidebar/sidebar";
 
 const AppRoutes = () => {
   return (
@@ -16,6 +17,7 @@ const AppRoutes = () => {
           path="/home"
           element={
             <ProtectedRoute>
+              <Sidebar />
               <Home />
             </ProtectedRoute>
           }
@@ -26,6 +28,7 @@ const AppRoutes = () => {
           path="/createTarefa"
           element={
             <ProtectedRoute>
+              <Sidebar />
               <CreateTarefa />
             </ProtectedRoute>
           }
@@ -34,6 +37,7 @@ const AppRoutes = () => {
           path="/updateTarefa/:id"
           element={
             <ProtectedRoute>
+              <Sidebar />
               <UpdateTarefa />
             </ProtectedRoute>
           }
@@ -42,6 +46,7 @@ const AppRoutes = () => {
           path="/tarefas"
           element={
             <ProtectedRoute>
+              <Sidebar />
               <ListTarefa />
             </ProtectedRoute>
           }

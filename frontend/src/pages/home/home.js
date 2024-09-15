@@ -15,7 +15,6 @@ const Home = () => {
             <Link className="h-full w-full flex items-center" to="/tarefas">Ir para tela de Listagem de Tarefas</Link>
           </div>
         </div>
-        <LogoutButton />
       </div>
     </>
   );
