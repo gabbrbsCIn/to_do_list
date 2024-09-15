@@ -8,6 +8,7 @@ import CreateTarefa from "../pages/createTarefa/createTarefa";
 import UpdateTarefa from "../pages/updateTarefa/updateTarefa";
 import ListTarefa from "../pages/listTarefa/listTarefa";
 import Sidebar from "../components/sidebar/sidebar";
+import DeleteMembro from "../pages/deleteMembro/deleteMembro";
 
 const AppRoutes = () => {
   return (
@@ -48,6 +49,15 @@ const AppRoutes = () => {
             <ProtectedRoute>
               <Sidebar />
               <ListTarefa />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/deleteMembro"
+          element={
+            <ProtectedRoute>
+              <Sidebar />
+              <DeleteMembro/>
             </ProtectedRoute>
           }
         />
