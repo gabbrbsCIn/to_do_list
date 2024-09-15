@@ -5,9 +5,10 @@ const tarefas = require("../controllers/tarefas");
 const { adminTarefa } = require("../middlewares/adminTarefaMiddleware");
 
 router.post("/create", authenticateToken, tarefas.create);
-router.post("/update", authenticateToken, adminTarefa, tarefas.update);
+router.put("/update", authenticateToken, adminTarefa, tarefas.update);
 router.get("/membro", authenticateToken, tarefas.getMembroTarefas);
 router.get("/", authenticateToken, tarefas.getAll);
+router.get("/:id", authenticateToken, adminTarefa, tarefas.getTarefaById);
 router.delete("/delete", authenticateToken, adminTarefa, tarefas.deleteTarefa);
 router.patch("/finish", authenticateToken, adminTarefa, tarefas.finish);
 
