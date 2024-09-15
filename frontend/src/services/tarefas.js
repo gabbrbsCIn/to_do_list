@@ -45,3 +45,12 @@ export const deleteTarefa = async (tarefaId) => {
         sendErrorResponse(error);
     }
 }
+
+export const createTarefa = async (data) => {
+    try {
+        const response = await api.post(`http://localhost:8080/tarefas/create`, data);
+        return response.data;
+    } catch (error) {
+        sendErrorResponse(error);
+    }
+}
