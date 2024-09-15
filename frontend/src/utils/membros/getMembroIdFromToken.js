@@ -2,7 +2,7 @@ import { jwtDecode } from "jwt-decode";
 
 
 
-const getUserIdFromToken = () => {
+const getMembroIdFromToken = () => {
     const token = localStorage.getItem("authToken");
     if (token) {
         const decodedToken = jwtDecode(token);
@@ -11,4 +11,4 @@ const getUserIdFromToken = () => {
     return null;
 };
 
-export default getUserIdFromToken;
+export default getMembroIdFromToken;

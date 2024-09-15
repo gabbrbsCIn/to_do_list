@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import api from "../../services/api";
 import { toast } from "react-toastify";
 import { MdDeleteForever } from "react-icons/md";
-import { MdEdit, MdAddCircle} from "react-icons/md";
-import getUserIdFromToken from "../../utils/membros/getMembroFromToken";
+import { MdEdit, MdAddCircle } from "react-icons/md";
+import getMembroIdFromToken from "../../utils/membros/getMembroIdFromToken";
 
 const ListTarefa = () => {
   const [tarefas, setTarefas] = useState([]);
@@ -20,7 +20,7 @@ const ListTarefa = () => {
         toast.error(error.message);
       }
     };
-    const loggedInUserId = getUserIdFromToken();
+    const loggedInUserId = getMembroIdFromToken();
     setUserId(loggedInUserId);
 
     fetchTarefas();
@@ -64,7 +64,7 @@ const ListTarefa = () => {
 
       <div className="w-full max-w-4xl bg-white p-4 rounded-sm shadow-md">
         <button className="bg-teal-500 text-white py-2 px-4 rounded-sm mb-4">
-          <Link to="/createTarefa"><MdAddCircle size={24}/></Link>
+          <Link to="/createTarefa"><MdAddCircle size={24} /></Link>
         </button>
 
         <ul className="space-y-4">

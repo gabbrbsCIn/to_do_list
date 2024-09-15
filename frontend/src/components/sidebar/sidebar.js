@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import LogoutButton from '../auth/logout';
-import { MdHome, MdList, MdAddCircle, MdPersonAdd } from 'react-icons/md';
+import { MdHome, MdList, MdAddCircle, MdPersonAdd, MdDelete } from 'react-icons/md';
 
 const Sidebar = () => {
     return (
@@ -24,6 +24,10 @@ const Sidebar = () => {
             <Link to="/register" className="mb-6">
                 <MdPersonAdd size={32} className="text-white" />
                 <span className="sr-only">Registrar Usuário</span>
+            </Link>
+            <Link to="/deleteMembro" className="mb-6">
+                <MdDelete size={32} className="text-white" />
+                <span className="sr-only">Deletar Membro</span>
             </Link>
             <LogoutButton className=" hover:text-gray-300" />
         </div>
