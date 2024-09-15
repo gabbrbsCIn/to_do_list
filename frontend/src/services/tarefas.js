@@ -18,3 +18,30 @@ export const getTarefaById = async (id) => {
         sendErrorResponse(error);
     }
 }
+
+export const getTarefas = async () => {
+    try {
+        const response = await api.get(`http://localhost:8080/tarefas`);
+        return response.data;
+    } catch (error) {
+        sendErrorResponse(error);
+    }
+}
+
+export const updateTarefaFinalizada = async (tarefaId) => {
+    try {
+        const response = await api.patch(`http://localhost:8080/tarefas/finish`, {id: tarefaId});
+        return response.data;
+    } catch (error) {
+        sendErrorResponse(error);
+    }
+}
+
+export const deleteTarefa = async (tarefaId) => {
+    try {
+        const response = await api.delete(`http://localhost:8080/tarefas/delete/${tarefaId}`);
+        return response.data;
+    } catch (error) {
+        sendErrorResponse(error);
+    }
+}
