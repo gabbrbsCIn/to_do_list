@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import api from "../../services/api";
-import { sendErrorResponse } from "../../utils/error/sendErrorResponse";
 import { toast } from "react-toastify";
 
 
@@ -66,7 +65,6 @@ const UpdateTarefa = () => {
                         className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                         value={descricao}
                         onChange={(e) => setDescricao(e.target.value)}
-                        required
                     />
                 </div>
 
