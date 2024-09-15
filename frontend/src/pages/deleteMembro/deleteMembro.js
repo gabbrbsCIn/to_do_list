@@ -1,16 +1,18 @@
 import { toast } from "react-toastify";
-import api from "../../services/api";
+import { logout } from "../../services/auth";
+import { deleteMembro } from "../../services/membros";
+import { sendToastErrorResponse } from "../../utils/error/sendToastErrorResponse";
+
 
 const DeleteMembro = () => {
 
     const handleDeleteMembro = async () => {
         try {
-            await api.delete(`http://localhost:8080/membros/delete`);
-            localStorage.removeItem("authToken");
+            await deleteMembro();
+            logout();
             toast.success("Membro deletado com sucesso!");
-        }catch (error) {
-            console.error(error);
-            toast.error(error.message);
+        } catch (error) {
+            sendToastErrorResponse(error);
         }
 
     }
